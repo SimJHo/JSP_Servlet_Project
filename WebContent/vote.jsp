@@ -24,6 +24,9 @@
 		<jsp:include page="header.jsp"/>
 
 		<main class="px-3 container">
+		
+			<br><h1>투표하기</h1><br>
+		
 			<form action="vote.do" method="post" onsubmit="alert('투표 완료!')">
 				<table class="table table-dark table-striped">
 					<tr>

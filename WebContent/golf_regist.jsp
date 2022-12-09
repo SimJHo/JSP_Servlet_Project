@@ -25,6 +25,9 @@
 		<jsp:include page="header.jsp" />
 		
 		<main class="px-3 container">
+		
+			<br><h1>수강 신청</h1><br>
+		
 			<form action="golf_regist.do" method="post" onsubmit="alert('등록 완료!')">
 				<table class="table table-dark table-striped">
 					<tr>

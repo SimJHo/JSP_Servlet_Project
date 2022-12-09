@@ -15,6 +15,12 @@ import command.GRegistCommand;
 import command.GStudentCommand;
 import command.GSumCommand;
 import command.GTeacherCommand;
+import command.MemberContentCommand;
+import command.MemberInsertCommand;
+import command.MemberListCommand;
+import command.MemberRegistrationCommand;
+import command.MemberSalesCommand;
+import command.MemberUpdateCommand;
 import command.RspCommand;
 import command.VoteCheckCommand;
 import command.VoteCommand;
@@ -90,6 +96,45 @@ public class Controller extends HttpServlet {
 			command.execute(request, response);
 			viewPage ="vote_count.jsp";
 		}
+		//쇼핑
+		if (com.equals("/list.do")) {
+            System.out.println("/list.do ..");
+
+            command = new MemberListCommand();
+            command.execute(request, response);
+            viewPage = "list.jsp";
+
+        } else if (com.equals("/registration.do")) {
+            System.out.println("/registration.do ..");
+
+            command = new MemberRegistrationCommand();
+            command.execute(request, response);
+            viewPage = "insert.jsp";
+        } else if (com.equals("/insert.do")) {
+            System.out.println("/insert.do ..");
+
+            command = new MemberInsertCommand();
+            command.execute(request, response);
+            viewPage = "list.do";
+        } else if (com.equals("/sales.do")) {
+            System.out.println("/sales.do ..");
+
+            command = new MemberSalesCommand();
+            command.execute(request, response);
+            viewPage = "sales.jsp";
+        } else if (com.equals("/content.do")) {
+            System.out.println("/content.do ..");
+
+            command = new MemberContentCommand();
+            command.execute(request, response);
+            viewPage = "content.jsp";
+        } else if (com.equals("/update.do")) {
+            System.out.println("/update.do ..");
+
+            command = new MemberUpdateCommand();
+            command.execute(request, response);
+            viewPage = "list.do";
+        }
 		//골프
 		else if(com.equals("/golf_teacher.do")) {
 			System.out.println("디버깅문구");

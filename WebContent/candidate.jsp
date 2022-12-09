@@ -21,6 +21,9 @@
 		<jsp:include page="header.jsp"/>
 
 		<main class="px-3 container">
+		
+		<br><h1>후보 조회</h1><br>
+		
 			<table class="table table-dark table-striped">
 				<tr>
 					<th>후보번호</th>

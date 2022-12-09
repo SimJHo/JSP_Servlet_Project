@@ -22,23 +22,21 @@
 
 		<main class="px-3 container">
 		
-			<br><h1>강사 조회</h1><br>
-		
+			<br><h1>회원 매출 조회</h1><br>
+			
 			<table class="table table-dark table-striped">
 				<tr>
-					<th>강사코드</th>
-					<th>강사명</th>
-					<th>강의명</th>
-					<th>수강료</th>
-					<th>강사자격취득일</th>
+					<th>회원번호</th>
+					<th>회원성명</th>
+					<th>전화번호</th>
+					<th>주소</th>
 				</tr>
-				<c:forEach var="golf_teacher" items="${ teacher }">
+				<c:forEach var="board" items="${ salesList }">
 					<tr>
-						<td>${ golf_teacher.teacher_code }</td>
-						<td>${ golf_teacher.teacher_name }</td>
-						<td>${ golf_teacher.class_name }</td>
-						<td>${ golf_teacher.class_price }</td>
-						<td>${ golf_teacher.teacher_regist_date }</td>
+						<td>${ board.custNo }</td>
+						<td>${ board.custName }</td>
+						<td>${ board.grade }</td>
+						<td>${ board.sales }</td>
 					</tr>
 				</c:forEach>
 			</table>

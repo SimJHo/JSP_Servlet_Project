@@ -29,7 +29,7 @@
 
 		<main class="px-3 container">
 			<br>
-			<h1> 가위/바위/보 중 한가지를 선택해주세요.</h1>
+			<h1> 가위/바위/보 </h1>
 			<br>
 
 			<form action="rsp.do">

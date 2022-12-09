@@ -21,6 +21,9 @@
 		<jsp:include page="header.jsp"/>
 
 		<main class="px-3 container">
+		
+			<br><h1>회원 정보 조회</h1><br>
+		
 			<table class="table table-dark table-striped">
 				<tr>
 					<th>수강월</th>

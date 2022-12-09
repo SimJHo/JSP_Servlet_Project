@@ -55,9 +55,9 @@
 							class="nav-link dropdown-toggle text-light" href="#" role="button"
 							data-bs-toggle="dropdown" aria-expanded="false"> 홈쇼핑</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">회원등록</a></li>
-								<li><a class="dropdown-item" href="#">회원목록조회/수정</a></li>
-								<li><a class="dropdown-item" href="#">회원매출조회</a></li>
+								<li><a class="dropdown-item" href="/JSP_Servlet_Project/registration.do">회원등록</a></li>
+								<li><a class="dropdown-item" href="/JSP_Servlet_Project/list.do">회원목록조회/수정</a></li>
+								<li><a class="dropdown-item" href="/JSP_Servlet_Project/sales.do">회원매출조회</a></li>
 							</ul>
 						</li>
 						

@@ -12,6 +12,10 @@
 	main{
 		min-height: 400px;
 	}
+	table {
+		margin: auto;
+		max-width: 600px;
+	}
 </style>
 </head>
 
@@ -21,6 +25,9 @@
 		<jsp:include page="header.jsp"/>
 
 		<main class="px-3 container">
+		
+			<br><h1>강사 매출 현황</h1><br>
+		
 			<table class="table table-dark table-striped">
 				<tr>
 					<th>강사코드</th>
