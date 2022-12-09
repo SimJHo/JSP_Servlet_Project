@@ -15,12 +15,16 @@
 	.navbar-brand{
 		padding: 10px;
 		border-radius: 10px;
+		font-weight: bolder;
 	}
 	.navbar .nav-item>a:hover, .navbar-brand:hover{
 		background-color: rgba(255, 255, 255, 0.2); 
 	}
 	nav{
 		margin-bottom: 10px;
+	}
+	h1{
+		font-weight: bolder;
 	}
 </style>
 </head>

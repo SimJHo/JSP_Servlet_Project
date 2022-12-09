@@ -14,7 +14,7 @@
    }
    table {
       margin: auto;
-      max-width: 600px;
+      max-width: 700px;
    }
 </style>
 </head>
@@ -95,8 +95,8 @@
 				
 					<tr>
 						<td colspan="2">
-							<button type="submit" class="btn btn-light">수강신청</button>
-							<button type="reset" class="btn btn-light ms-3">다시쓰기</button> 
+							<button type="submit" class="btn btn-light">등록</button>
+							<a href="/JSP_Servlet_Project/list.do"><button type="button" class="btn btn-light ms-3">조회</button> </a>
 						</td>
 					</tr>
 				</table>

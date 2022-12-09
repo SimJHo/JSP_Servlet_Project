@@ -12,6 +12,10 @@
 	main{
 		min-height: 400px;
 	}
+	table {
+      margin: auto;
+      max-width: 600px;
+   }
 </style>
 </head>
 

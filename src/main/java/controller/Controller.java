@@ -99,38 +99,32 @@ public class Controller extends HttpServlet {
 		//쇼핑
 		if (com.equals("/list.do")) {
             System.out.println("/list.do ..");
-
             command = new MemberListCommand();
             command.execute(request, response);
             viewPage = "list.jsp";
 
         } else if (com.equals("/registration.do")) {
             System.out.println("/registration.do ..");
-
             command = new MemberRegistrationCommand();
             command.execute(request, response);
             viewPage = "insert.jsp";
         } else if (com.equals("/insert.do")) {
             System.out.println("/insert.do ..");
-
             command = new MemberInsertCommand();
             command.execute(request, response);
             viewPage = "list.do";
         } else if (com.equals("/sales.do")) {
             System.out.println("/sales.do ..");
-
             command = new MemberSalesCommand();
             command.execute(request, response);
             viewPage = "sales.jsp";
         } else if (com.equals("/content.do")) {
             System.out.println("/content.do ..");
-
             command = new MemberContentCommand();
             command.execute(request, response);
             viewPage = "content.jsp";
         } else if (com.equals("/update.do")) {
             System.out.println("/update.do ..");
-
             command = new MemberUpdateCommand();
             command.execute(request, response);
             viewPage = "list.do";

@@ -24,6 +24,7 @@ import dto.VotecountDto;
 public class Dao {
 	
 	private DataSource dataSource = null;
+	private SQL sql = new SQL();
 	
 	public Dao() {
 		
@@ -47,16 +48,7 @@ public class Dao {
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT M_NO, "
-					+ "M_NAME, "
-					+ "P_NAME, "
-					+ "CASE P_SCHOOL WHEN '1' THEN '고졸' WHEN '2' THEN '학사' WHEN '3' THEN '석사' WHEN '4' THEN '박사' END AS P_SCHOOL, "
-					+ "(SUBSTR(M_JUMIN, 1,6)||'-'||SUBSTR(M_JUMIN, 7, 13)) AS M_JUMIN, "
-					+ "M_CITY, "
-					+ "P_TEL1, "
-					+ "P_TEL2, "
-					+ "P_TEL3 "
-					+ "FROM TBL_MEMBER M, TBL_PARTY P WHERE M.P_CODE = P.P_CODE";
+			String query = sql.candidate;
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			rs = preparedStatement.executeQuery();
@@ -104,9 +96,7 @@ public class Dao {
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			String query = "INSERT INTO TBL_VOTE "
-		               + "(V_JUMIN, V_NAME, M_NO, V_TIME, V_AREA, V_CONFIRM) "
-		               + "VALUES (?, ?, ?, ?, ?, ?)";
+			String query = sql.vote;
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, v_jumin);
@@ -141,15 +131,7 @@ public class Dao {
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT V_NAME, "
-					+ "(19||SUBSTR(V_JUMIN, 1,2)||'년'||SUBSTR(V_JUMIN, 3, 2)||'월'||SUBSTR(V_JUMIN, 5, 2)||'일생')AS V_JUMIN, "
-					+ "'만 '||TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE),"
-					+ " TO_DATE(19||(SUBSTR(V_JUMIN,1,6)),'YYYYMMDD')) / 12)||'세' AS V_AGE, "
-					+ "CASE SUBSTR(V_JUMIN,7,1) WHEN '1' THEN '남' WHEN '2' THEN '여' END AS V_GENDER, "
-					+ "M_NO, "
-					+ "V_TIME, "
-					+ "CASE V_CONFIRM WHEN 'Y' THEN '확인' WHEN 'N' THEN '미확인' END AS V_CONFIRM "
-					+ "from tbl_vote";
+			String query = sql.voteCheck;
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			rs = preparedStatement.executeQuery();
@@ -196,12 +178,7 @@ public class Dao {
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT  M.M_NO, "
-					+ "M.M_NAME, "
-					+ "COUNT(*) AS M_CNT FROM TBL_MEMBER M, TBL_VOTE V "
-					+ "WHERE M.M_NO = V.M_NO AND NOT V.V_CONFIRM = 'N' "
-					+ "GROUP BY M.M_NAME, M.M_NO, V.M_NO "
-					+ "ORDER BY M_CNT DESC";
+			String query = sql.voteCount;
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			rs = preparedStatement.executeQuery();
@@ -249,12 +226,7 @@ public class Dao {
 
         try {
             connection = dataSource.getConnection();
-            String query = "SELECT CUSTNO, CUSTNAME, PHONE, ADDRESS, JOINDATE, CITY," +
-                    "CASE GRADE " +
-                    "WHEN 'A' THEN 'VIP'" +
-                    "WHEN 'B' THEN '일반'" +
-                    "WHEN 'C' THEN '직원'" +
-                    "END AS GRADE FROM MEMBER_TBL_02 ORDER BY CUSTNO ASC";
+            String query = sql.list4;
 
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
@@ -300,7 +272,7 @@ public class Dao {
 
         try {
             connection = dataSource.getConnection();
-            String query = "SELECT MAX(CUSTNO) + 1 AS CUSTNO FROM MEMBER_TBL_02";
+            String query = sql.max_custNo;
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) custNo = resultSet.getString("custNo");
@@ -331,8 +303,7 @@ public class Dao {
 
         try {
             connection = dataSource.getConnection();
-            String query = "INSERT INTO member_tbl_02 (CUSTNO, CUSTNAME, PHONE, ADDRESS, JOINDATE, GRADE, CITY) " +
-                    "VALUES (?,?,?,?,?,?,?)";
+            String query = sql.insert;
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, Integer.parseInt(custNo));
             preparedStatement.setString(2,custName);
@@ -371,14 +342,7 @@ public class Dao {
 
         try {
             connection = dataSource.getConnection();
-            String query = "SELECT DISTINCT MEMBER_TBL_02.CUSTNO, MEMBER_TBL_02.CUSTNAME, CASE GRADE\n" +
-                    "    WHEN 'A' THEN 'VIP'\n" +
-                    "    WHEN 'B' THEN '일반'\n" +
-                    "    WHEN 'C' THEN '직원'\n" +
-                    "    END AS GRADE, PRICE.SALES\n" +
-                    "FROM MEMBER_TBL_02,MONEY_TBL_02 ,(SELECT CUSTNO,SUM(PRICE) AS SALES FROM MONEY_TBL_02 GROUP BY CUSTNO) PRICE\n" +
-                    "WHERE MEMBER_TBL_02.CUSTNO = MONEY_TBL_02.CUSTNO AND MEMBER_TBL_02.CUSTNO = PRICE.CUSTNO " +
-                    "ORDER BY PRICE.SALES DESC";
+            String query = sql.sales;
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
@@ -418,7 +382,7 @@ public class Dao {
 
         try {
             connection = dataSource.getConnection();
-            String query = "SELECT * FROM MEMBER_TBL_02 WHERE CUSTNO = ?";
+            String query = sql.content;
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, Integer.parseInt(custNo));
             resultSet = preparedStatement.executeQuery();
@@ -461,9 +425,7 @@ public class Dao {
 
         try {
             connection = dataSource.getConnection();
-            String query = "UPDATE MEMBER_TBL_02 " +
-                           "SET CUSTNAME = ?, PHONE = ?, ADDRESS = ?, JOINDATE = ?, GRADE = ?, CITY = ? " +
-                           "WHERE CUSTNO = ?";
+            String query = sql.create;
             preparedStatement = connection.prepareStatement(query);
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,custName);
@@ -502,12 +464,7 @@ public class Dao {
 		ResultSet rs = null;
 
 		try {
-			String query= "SELECT TEACHER_CODE, "
-					+ "TEACHER_NAME, "
-					+ "CLASS_NAME, "
-					+ "TO_CHAR(CLASS_PRICE, 'L999,999') AS CLASS_PRICE, "
-					+ "SUBSTR(TEACHER_REGIST_DATE, 1, 4)||'년'||SUBSTR(TEACHER_REGIST_DATE, 5, 2)||'월'||SUBSTR(TEACHER_REGIST_DATE, 7, 2)||'일' AS TEACHER_REGIST_DATE "
-					+ "FROM TBL_TEACHER_202201";
+			String query = sql.list;
 		           
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
@@ -549,14 +506,7 @@ public class Dao {
 		ResultSet rs = null;
 
 		try {
-			String query= "SELECT SUBSTR(REGIST_MONTH, 1, 4)||'년'||SUBSTR(REGIST_MONTH, 5, 2)||'월' AS REGIST_MONTH, "
-					+ "C.C_NO, "
-					+ "M.C_NAME, "
-					+ "CASE C.TEACHER_CODE WHEN '100' THEN '초급반' WHEN '200' THEN '중급반' WHEN '300' THEN '고급반' WHEN '400' THEN '심화반' END AS TEACHER_CODE, "
-					+ "C.CLASS_AREA, "
-					+ "TO_CHAR(C.TUITION, 'L999,999') AS TUITION, "
-					+ "M.GRADE "
-					+ "FROM TBL_CLASS_202201 C, TBL_MEMBER_202201 M WHERE C.C_NO = M.C_NO ";
+			String query = sql.list2;
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			rs = preparedStatement.executeQuery();
@@ -607,9 +557,7 @@ public class Dao {
 	           설정했다. 글 작성시 조회수(bhit)는 0이고, 원본 글로 취급하므로 bstep, bindent는
 	           지수를 넣어줄 필요가 없기 때문이다.
 			 */
-			String query = "INSERT INTO TBL_CLASS_202201 "
-					+ "(REGIST_MONTH, C_NO, CLASS_AREA, TUITION, TEACHER_CODE)"
-					+ "VALUES (?,?,?,?,?)";
+			String query = sql.regist;
 
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
@@ -645,12 +593,7 @@ public class Dao {
 		ResultSet rs = null;
 
 		try {
-			String query= "SELECT T.TEACHER_CODE, "
-					+ "CLASS_NAME, "
-					+ "TEACHER_NAME, "
-					+ "TO_CHAR(TUITION , 'L999,999') AS TUITION "
-					+ "FROM TBL_TEACHER_202201 T, (SELECT TEACHER_CODE, SUM(TUITION) AS TUITION FROM TBL_CLASS_202201 GROUP BY TEACHER_CODE) C "
-					+ "WHERE T.TEACHER_CODE = C.TEACHER_CODE";
+			String query = sql.list3;
 			connection = dataSource.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			rs = preparedStatement.executeQuery();
